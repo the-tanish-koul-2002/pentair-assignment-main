@@ -13,8 +13,8 @@ hooks:
   BeforeInstall:
     - runas: root
       timeout: 300
-      command: "yum update -y && yum install -y docker && systemctl start docker && systemctl enable docker"
+      command: "yum update -y && yum install -y docker docker-compose && systemctl start docker && systemctl enable docker"
   ApplicationStart:
     - runas: root
       timeout: 300
-      command: "docker run -d -p 3000:3000 --name weather-app <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/weather-app:latest"
+      command: "cd /home/ec2-user/myapp && docker-compose up -d"

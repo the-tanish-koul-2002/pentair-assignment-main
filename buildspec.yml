@@ -27,6 +27,5 @@ phases:
 artifacts:
   files:
     - appspec.yml
-    - '**/*'
     - docker-compose.yml
   discard-paths: yes
