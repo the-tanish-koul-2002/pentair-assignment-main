@@ -7,15 +7,14 @@ files:
 
 hooks:
   ApplicationStop:
-    - location: scripts/stop_app.sh
+    - runas: root
       timeout: 300
-      runas: root
+      command: "docker stop weather-app || true && docker rm weather-app || true"
   BeforeInstall:
-    - location: scripts/install_dependencies.sh
+    - runas: root
       timeout: 300
-      runas: root
-  
+      command: "yum update -y && yum install -y docker && systemctl start docker && systemctl enable docker"
   ApplicationStart:
-    - location: scripts/start_app.sh
+    - runas: root
       timeout: 300
-      runas: root
+      command: "docker run -d -p 3000:3000 --name weather-app <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/weather-app:latest"
