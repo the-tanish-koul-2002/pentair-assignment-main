@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <!-- Link to the static CSS file -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>Weather Dashboard</h1>
+            <p>Check the weather of any city in the world.</p>
+        </header>
+        
+        <div class="main">
+            <h2>Enter a city to get the weather:</h2>
+            <form id="temperature" action="/weather" method="post">
+                <label for="city">City Name:</label>
+                <input type="text" id="city" name="city" required placeholder="e.g., New York">
+                <button type="submit">Get Weather</button>
+            </form>
+        </div>
+        
+        <footer class="footer">
+            <p>Powered by <strong>Your Weather API</strong></p>
+        </footer>
+    </div>
+</body>
+</html>
