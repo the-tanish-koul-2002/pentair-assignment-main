@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  pre_build:
+    commands:
+      - echo "Running Pre-Build Steps..."
+      - npm test
+  build:
+    commands:
+      - echo "Building the Docker image..."
+      - docker build -t my-weather-app .
+  post_build:
+    commands:
+      - echo "Tagging and pushing the Docker image..."
+      - $(aws ecr get-login --no-include-email --region us-east-1)
+      - docker tag my-weather-app:latest 216989092759.dkr.ecr.us-east-1.amazonaws.com/my-weather-app:latest
+      - docker push 216989092759.dkr.ecr.us-east-1.amazonaws.com/my-weather-app:latest
+      - echo "Build process complete."
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/*.sh
+    - docker-compose.yml
+  discard-paths: yes
