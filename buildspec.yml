@@ -11,16 +11,16 @@ phases:
     commands:
       - echo "skipping test"
       - docker login -u sherkoul --password dckr_pat_9RIfoHVDiIvpxP2iRQthxprr6Pg
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 216989092759.dkr.ecr.us-east-1.amazonaws.com
       
   build:
     commands:
       - echo "Building the Docker image..."
       - docker build -t weather-app .
+      - docker tag weather-app:latest 216989092759.dkr.ecr.us-east-1.amazonaws.com/weather-app:latest
   post_build:
     commands:
       - echo "Tagging and pushing the Docker image..."
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 216989092759.dkr.ecr.us-east-1.amazonaws.com
-      - docker tag weather-app:latest 216989092759.dkr.ecr.us-east-1.amazonaws.com/weather-app:latest
       - docker push 216989092759.dkr.ecr.us-east-1.amazonaws.com/weather-app:latest
       - echo "Build process complete."
 
